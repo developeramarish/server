@@ -14,13 +14,13 @@ namespace Bit.Api.Billing.Attributes;
 /// <para>This attribute retrieves the organization associated with the 'organizationId' included in the executing context's route data. If the organization cannot be found,
 /// the request is terminated with a not found response.</para>
 /// <para>The injected <see cref="Organization"/>
-/// parameter must be marked with a [BindNever] attribute to short-circuit the model-binding system.</para>
+/// parameter must be marked with a [FromFilter] attribute to short-circuit the model-binding system.</para>
 /// </remarks>
 /// <example>
 /// <code><![CDATA[
 /// [HttpPost]
 /// [InjectOrganization]
-/// public async Task<IResult> EndpointAsync([BindNever] Organization organization)
+/// public async Task<IResult> EndpointAsync([FromFilter] Organization organization)
 /// ]]></code>
 /// </example>
 /// <seealso cref="Microsoft.AspNetCore.Mvc.Filters.ActionFilterAttribute"/>

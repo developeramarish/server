@@ -24,7 +24,7 @@ public class SelfHostedAccountBillingController(
     [RequireFeature(FeatureFlagKeys.PM23385_UseNewPremiumFlow)]
     [InjectUser]
     public async Task<IResult> UploadLicenseAsync(
-        [BindNever] User user,
+        [FromFilter] User user,
         PremiumSelfHostedSubscriptionRequest request)
     {
         var license = await ApiHelpers.ReadJsonFileFromBody<UserLicense>(HttpContext, request.License);

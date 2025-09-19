@@ -31,7 +31,7 @@ public class OrganizationBillingVNextController(
     [HttpGet("address")]
     [InjectOrganization]
     public async Task<IResult> GetBillingAddressAsync(
-        [BindNever] Organization organization)
+        [FromFilter] Organization organization)
     {
         var billingAddress = await getBillingAddressQuery.Run(organization);
         return TypedResults.Ok(billingAddress);
@@ -41,7 +41,7 @@ public class OrganizationBillingVNextController(
     [HttpPut("address")]
     [InjectOrganization]
     public async Task<IResult> UpdateBillingAddressAsync(
-        [BindNever] Organization organization,
+        [FromFilter] Organization organization,
         [FromBody] BillingAddressRequest request)
     {
         var billingAddress = request.ToDomain();
@@ -53,7 +53,7 @@ public class OrganizationBillingVNextController(
     [HttpGet("credit")]
     [InjectOrganization]
     public async Task<IResult> GetCreditAsync(
-        [BindNever] Organization organization)
+        [FromFilter] Organization organization)
     {
         var credit = await getCreditQuery.Run(organization);
         return TypedResults.Ok(credit);
@@ -63,7 +63,7 @@ public class OrganizationBillingVNextController(
     [HttpPost("credit/bitpay")]
     [InjectOrganization]
     public async Task<IResult> AddCreditViaBitPayAsync(
-        [BindNever] Organization organization,
+        [FromFilter] Organization organization,
         [FromBody] BitPayCreditRequest request)
     {
         var result = await createBitPayInvoiceForCreditCommand.Run(
@@ -77,7 +77,7 @@ public class OrganizationBillingVNextController(
     [HttpGet("payment-method")]
     [InjectOrganization]
     public async Task<IResult> GetPaymentMethodAsync(
-        [BindNever] Organization organization)
+        [FromFilter] Organization organization)
     {
         var paymentMethod = await getPaymentMethodQuery.Run(organization);
         return TypedResults.Ok(paymentMethod);
@@ -87,7 +87,7 @@ public class OrganizationBillingVNextController(
     [HttpPut("payment-method")]
     [InjectOrganization]
     public async Task<IResult> UpdatePaymentMethodAsync(
-        [BindNever] Organization organization,
+        [FromFilter] Organization organization,
         [FromBody] TokenizedPaymentMethodRequest request)
     {
         var (paymentMethod, billingAddress) = request.ToDomain();
@@ -99,7 +99,7 @@ public class OrganizationBillingVNextController(
     [HttpGet("warnings")]
     [InjectOrganization]
     public async Task<IResult> GetWarningsAsync(
-        [BindNever] Organization organization)
+        [FromFilter] Organization organization)
     {
         var warnings = await getOrganizationWarningsQuery.Run(organization);
         return TypedResults.Ok(warnings);

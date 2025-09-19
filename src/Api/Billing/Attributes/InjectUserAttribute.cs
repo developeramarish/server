@@ -14,13 +14,13 @@ namespace Bit.Api.Billing.Attributes;
 /// <para>This attribute retrieves the authorized user associated with the current HTTP context using the <see cref="IUserService"/> service.
 /// If the user is unauthorized or cannot be found, the request is terminated with an unauthorized response.</para>
 /// <para>The injected <see cref="User"/>
-/// parameter must be marked with a [BindNever] attribute to short-circuit the model-binding system.</para>
+/// parameter must be marked with a [FromFilter] attribute to short-circuit the model-binding system.</para>
 /// </remarks>
 /// <example>
 /// <code><![CDATA[
 /// [HttpPost]
 /// [InjectUser]
-/// public async Task<IResult> EndpointAsync([BindNever] User user)
+/// public async Task<IResult> EndpointAsync([FromFilter] User user)
 /// ]]></code>
 /// </example>
 /// <seealso cref="ActionFilterAttribute"/>

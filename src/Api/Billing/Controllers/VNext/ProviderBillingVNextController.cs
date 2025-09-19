@@ -28,7 +28,7 @@ public class ProviderBillingVNextController(
     [HttpGet("address")]
     [InjectProvider(ProviderUserType.ProviderAdmin)]
     public async Task<IResult> GetBillingAddressAsync(
-        [BindNever] Provider provider)
+        [FromFilter] Provider provider)
     {
         var billingAddress = await getBillingAddressQuery.Run(provider);
         return TypedResults.Ok(billingAddress);
@@ -37,7 +37,7 @@ public class ProviderBillingVNextController(
     [HttpPut("address")]
     [InjectProvider(ProviderUserType.ProviderAdmin)]
     public async Task<IResult> UpdateBillingAddressAsync(
-        [BindNever] Provider provider,
+        [FromFilter] Provider provider,
         [FromBody] BillingAddressRequest request)
     {
         var billingAddress = request.ToDomain();
@@ -48,7 +48,7 @@ public class ProviderBillingVNextController(
     [HttpGet("credit")]
     [InjectProvider(ProviderUserType.ProviderAdmin)]
     public async Task<IResult> GetCreditAsync(
-        [BindNever] Provider provider)
+        [FromFilter] Provider provider)
     {
         var credit = await getCreditQuery.Run(provider);
         return TypedResults.Ok(credit);
@@ -57,7 +57,7 @@ public class ProviderBillingVNextController(
     [HttpPost("credit/bitpay")]
     [InjectProvider(ProviderUserType.ProviderAdmin)]
     public async Task<IResult> AddCreditViaBitPayAsync(
-        [BindNever] Provider provider,
+        [FromFilter] Provider provider,
         [FromBody] BitPayCreditRequest request)
     {
         var result = await createBitPayInvoiceForCreditCommand.Run(
@@ -70,7 +70,7 @@ public class ProviderBillingVNextController(
     [HttpGet("payment-method")]
     [InjectProvider(ProviderUserType.ProviderAdmin)]
     public async Task<IResult> GetPaymentMethodAsync(
-        [BindNever] Provider provider)
+        [FromFilter] Provider provider)
     {
         var paymentMethod = await getPaymentMethodQuery.Run(provider);
         return TypedResults.Ok(paymentMethod);
@@ -79,7 +79,7 @@ public class ProviderBillingVNextController(
     [HttpPut("payment-method")]
     [InjectProvider(ProviderUserType.ProviderAdmin)]
     public async Task<IResult> UpdatePaymentMethodAsync(
-        [BindNever] Provider provider,
+        [FromFilter] Provider provider,
         [FromBody] TokenizedPaymentMethodRequest request)
     {
         var (paymentMethod, billingAddress) = request.ToDomain();
@@ -99,7 +99,7 @@ public class ProviderBillingVNextController(
     [HttpGet("warnings")]
     [InjectProvider(ProviderUserType.ServiceUser)]
     public async Task<IResult> GetWarningsAsync(
-        [BindNever] Provider provider)
+        [FromFilter] Provider provider)
     {
         var warnings = await getProviderWarningsQuery.Run(provider);
         return TypedResults.Ok(warnings);

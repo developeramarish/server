@@ -17,13 +17,13 @@ namespace Bit.Api.Billing.Attributes;
 /// the request is terminated with a not-found response. It then checks the authorization level for the provider using the provided <paramref name="providerUserType"/>.
 /// If this check fails, the request is terminated with an unauthorized response.</para>
 /// <para>The injected <see cref="Provider"/>
-/// parameter must be marked with a [BindNever] attribute to short-circuit the model-binding system.</para>
+/// parameter must be marked with a [FromFilter] attribute to short-circuit the model-binding system.</para>
 /// </remarks>
 /// <example>
 /// <code><![CDATA[
 /// [HttpPost]
 /// [InjectProvider(ProviderUserType.ProviderAdmin)]
-/// public async Task<IResult> EndpointAsync([BindNever] Provider provider)
+/// public async Task<IResult> EndpointAsync([FromFilter] Provider provider)
 /// ]]></code>
 /// </example>
 /// <param name="providerUserType">The desired access level for the authorization check.</param>

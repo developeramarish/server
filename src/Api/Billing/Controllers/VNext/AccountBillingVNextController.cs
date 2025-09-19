@@ -10,7 +10,6 @@ using Bit.Core.Entities;
 using Bit.Core.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Bit.Api.Billing.Controllers.VNext;
 
@@ -27,7 +26,7 @@ public class AccountBillingVNextController(
     [HttpGet("credit")]
     [InjectUser]
     public async Task<IResult> GetCreditAsync(
-        [BindNever] User user)
+        [FromFilter] User user)
     {
         var credit = await getCreditQuery.Run(user);
         return TypedResults.Ok(credit);
@@ -36,7 +35,7 @@ public class AccountBillingVNextController(
     [HttpPost("credit/bitpay")]
     [InjectUser]
     public async Task<IResult> AddCreditViaBitPayAsync(
-        [BindNever] User user,
+        [FromFilter] User user,
         [FromBody] BitPayCreditRequest request)
     {
         var result = await createBitPayInvoiceForCreditCommand.Run(
@@ -49,7 +48,7 @@ public class AccountBillingVNextController(
     [HttpGet("payment-method")]
     [InjectUser]
     public async Task<IResult> GetPaymentMethodAsync(
-        [BindNever] User user)
+        [FromFilter] User user)
     {
         var paymentMethod = await getPaymentMethodQuery.Run(user);
         return TypedResults.Ok(paymentMethod);
@@ -58,7 +57,7 @@ public class AccountBillingVNextController(
     [HttpPut("payment-method")]
     [InjectUser]
     public async Task<IResult> UpdatePaymentMethodAsync(
-        [BindNever] User user,
+        [FromFilter] User user,
         [FromBody] TokenizedPaymentMethodRequest request)
     {
         var (paymentMethod, billingAddress) = request.ToDomain();
@@ -70,7 +69,7 @@ public class AccountBillingVNextController(
     [RequireFeature(FeatureFlagKeys.PM23385_UseNewPremiumFlow)]
     [InjectUser]
     public async Task<IResult> CreateSubscriptionAsync(
-        [BindNever] User user,
+        [FromFilter] User user,
         [FromBody] PremiumCloudHostedSubscriptionRequest request)
     {
         var (paymentMethod, billingAddress, additionalStorageGb) = request.ToDomain();
